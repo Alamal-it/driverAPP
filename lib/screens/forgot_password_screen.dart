@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'package:flutter/services.dart';
+import 'otp_screen.dart';
 
 class ForgotPasswordScreen extends StatefulWidget {
   const ForgotPasswordScreen({super.key});
@@ -35,6 +36,12 @@ class _ForgotPasswordScreenState
     if (phoneController.text.trim().isEmpty) {
       ScaffoldMessenger.of(context).showSnackBar(
         const SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            bottom: 120,
+          ),
           content: Text(
             "الرجاء إدخال رقم الجوال",
             textAlign: TextAlign.center,
@@ -44,7 +51,12 @@ class _ForgotPasswordScreenState
       return;
     }
 
-    // الانتقال لصفحة رمز التحقق لاحقاً
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (context) => const OtpScreen(),
+      ),
+    );
   }
 
   @override
