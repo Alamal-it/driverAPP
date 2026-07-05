@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'forgot_password_screen.dart';
+import 'home_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -20,11 +21,29 @@ class _LoginScreenState extends State<LoginScreen> {
   void login() {
     if (usernameController.text.trim().isEmpty ||
         passwordController.text.trim().isEmpty) {
+      ScaffoldMessenger.of(context).showSnackBar(
+        const SnackBar(
+          behavior: SnackBarBehavior.floating,
+          margin: EdgeInsets.only(
+            left: 20,
+            right: 20,
+            bottom: 120,
+          ),
+          content: Text(
+            "الرجاء إدخال اسم المستخدم وكلمة السر",
+            textAlign: TextAlign.center,
+          ),
+        ),
+      );
       return;
     }
 
-    // الانتقال للصفحة الرئيسية لاحقاً
-    // Navigator.push(...);
+    Navigator.pushReplacement(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const HomeScreen(),
+      ),
+    );
   }
 
   @override
