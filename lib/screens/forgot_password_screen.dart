@@ -12,6 +12,7 @@ class ForgotPasswordScreen extends StatefulWidget {
 
 class _ForgotPasswordScreenState
     extends State<ForgotPasswordScreen> {
+
   final TextEditingController phoneController =
       TextEditingController();
 
@@ -54,7 +55,7 @@ class _ForgotPasswordScreenState
     Navigator.push(
       context,
       MaterialPageRoute(
-        builder: (context) => const OtpScreen(),
+        builder: (_) => const OtpScreen(),
       ),
     );
   }
@@ -67,8 +68,7 @@ class _ForgotPasswordScreenState
       body: SafeArea(
         child: SingleChildScrollView(
           child: Padding(
-            padding:
-                const EdgeInsets.symmetric(horizontal: 28),
+            padding: const EdgeInsets.symmetric(horizontal: 28),
 
             child: Column(
               children: [
@@ -110,13 +110,11 @@ class _ForgotPasswordScreenState
                 ),
 
                 const SizedBox(height: 18),
-
-                Container(
+                                Container(
                   height: 60,
                   decoration: BoxDecoration(
                     color: Colors.white,
-                    borderRadius:
-                        BorderRadius.circular(14),
+                    borderRadius: BorderRadius.circular(14),
                     border: Border.all(
                       color: const Color(0xffD7E1F1),
                     ),
@@ -132,8 +130,7 @@ class _ForgotPasswordScreenState
                     children: [
                       Container(
                         width: 120,
-                        padding:
-                            const EdgeInsets.symmetric(
+                        padding: const EdgeInsets.symmetric(
                           horizontal: 10,
                         ),
                         child: DropdownButtonHideUnderline(
@@ -173,23 +170,16 @@ class _ForgotPasswordScreenState
                       Expanded(
                         child: TextField(
                           controller: phoneController,
-                          keyboardType:
-                              TextInputType.number,
-
+                          keyboardType: TextInputType.number,
                           inputFormatters: [
-                            FilteringTextInputFormatter
-                                .digitsOnly,
-                            LengthLimitingTextInputFormatter(
-                                15),
+                            FilteringTextInputFormatter.digitsOnly,
+                            LengthLimitingTextInputFormatter(15),
                           ],
-
                           textAlign: TextAlign.right,
-
                           style: const TextStyle(
                             fontSize: 18,
                             color: Color(0xff0E4595),
                           ),
-
                           decoration: const InputDecoration(
                             border: InputBorder.none,
                             hintText: "5XXXXXXXX",
@@ -200,8 +190,7 @@ class _ForgotPasswordScreenState
                               Icons.phone_android,
                               color: Color(0xff8099C5),
                             ),
-                            contentPadding:
-                                EdgeInsets.symmetric(
+                            contentPadding: EdgeInsets.symmetric(
                               horizontal: 15,
                               vertical: 18,
                             ),
@@ -220,12 +209,10 @@ class _ForgotPasswordScreenState
                   child: ElevatedButton(
                     onPressed: sendCode,
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          const Color(0xff0E4595),
+                      backgroundColor: const Color(0xff0E4595),
                       elevation: 0,
                       shape: RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(14),
+                        borderRadius: BorderRadius.circular(14),
                       ),
                     ),
                     child: const Text(

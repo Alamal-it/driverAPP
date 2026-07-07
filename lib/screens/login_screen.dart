@@ -59,14 +59,14 @@ class _LoginScreenState extends State<LoginScreen> {
 
             child: Column(
               children: [
-                const SizedBox(height: 8),
+                const SizedBox(height: 35),
 
                 Image.asset(
                   "assets/images/alamal_logo.png",
                   width: 130,
                 ),
 
-                const SizedBox(height: 5),
+                const SizedBox(height: 20),
 
                 const Text(
                   "تسجيل الدخول",
@@ -77,7 +77,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 5),
+                const SizedBox(height: 8),
 
                 const Text(
                   "مرحباً بك، يرجى تسجيل الدخول للمتابعة",
@@ -88,7 +88,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 25),
+                const SizedBox(height: 45),
 
                 const Align(
                   alignment: Alignment.centerRight,
@@ -107,21 +107,16 @@ class _LoginScreenState extends State<LoginScreen> {
                 TextField(
                   controller: usernameController,
                   textAlign: TextAlign.right,
-
                   decoration: InputDecoration(
                     hintText: "ادخل اسم المستخدم",
-
                     prefixIcon: const Icon(
                       Icons.person_outline,
                       color: Color(0xff8099C5),
                     ),
-
-                    contentPadding:
-                        const EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                       vertical: 16,
                       horizontal: 15,
                     ),
-
                     enabledBorder: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(10),
@@ -129,7 +124,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Color(0xffD7E1F1),
                       ),
                     ),
-
                     focusedBorder: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(10),
@@ -141,7 +135,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 18),
+                const SizedBox(height: 25),
 
                 const Align(
                   alignment: Alignment.centerRight,
@@ -161,21 +155,16 @@ class _LoginScreenState extends State<LoginScreen> {
                   controller: passwordController,
                   obscureText: true,
                   textAlign: TextAlign.right,
-
                   decoration: InputDecoration(
                     hintText: "ادخل كلمة السر",
-
                     prefixIcon: const Icon(
                       Icons.lock_outline,
                       color: Color(0xff8099C5),
                     ),
-
-                    contentPadding:
-                        const EdgeInsets.symmetric(
+                    contentPadding: const EdgeInsets.symmetric(
                       vertical: 16,
                       horizontal: 15,
                     ),
-
                     enabledBorder: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(10),
@@ -183,7 +172,6 @@ class _LoginScreenState extends State<LoginScreen> {
                         color: Color(0xffD7E1F1),
                       ),
                     ),
-
                     focusedBorder: OutlineInputBorder(
                       borderRadius:
                           BorderRadius.circular(10),
@@ -194,12 +182,10 @@ class _LoginScreenState extends State<LoginScreen> {
                     ),
                   ),
                 ),
-
-                const SizedBox(height: 18),
+                                const SizedBox(height: 18),
 
                 Row(
-                  mainAxisAlignment:
-                      MainAxisAlignment.end,
+                  mainAxisAlignment: MainAxisAlignment.end,
                   children: [
                     const Text(
                       "تذكرني على هذا الجهاز",
@@ -218,26 +204,19 @@ class _LoginScreenState extends State<LoginScreen> {
                           rememberMe = !rememberMe;
                         });
                       },
-
                       child: Container(
                         width: 24,
                         height: 24,
-
                         decoration: BoxDecoration(
                           color: rememberMe
                               ? const Color(0xff0E4595)
                               : Colors.white,
-
                           border: Border.all(
-                            color:
-                                const Color(0xff0E4595),
+                            color: const Color(0xff0E4595),
                             width: 2,
                           ),
-
-                          borderRadius:
-                              BorderRadius.circular(4),
+                          borderRadius: BorderRadius.circular(4),
                         ),
-
                         child: rememberMe
                             ? const Icon(
                                 Icons.check,
@@ -250,28 +229,20 @@ class _LoginScreenState extends State<LoginScreen> {
                   ],
                 ),
 
-                const SizedBox(height: 25),
+                const SizedBox(height: 30),
 
                 SizedBox(
                   width: double.infinity,
                   height: 55,
-
                   child: ElevatedButton(
                     onPressed: login,
-
                     style: ElevatedButton.styleFrom(
-                      backgroundColor:
-                          const Color(0xff0E4595),
-
+                      backgroundColor: const Color(0xff0E4595),
                       elevation: 0,
-
-                      shape:
-                          RoundedRectangleBorder(
-                        borderRadius:
-                            BorderRadius.circular(10),
+                      shape: RoundedRectangleBorder(
+                        borderRadius: BorderRadius.circular(10),
                       ),
                     ),
-
                     child: const Text(
                       "تسجيل الدخول",
                       style: TextStyle(
@@ -283,7 +254,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 15),
+                const SizedBox(height: 18),
 
                 GestureDetector(
                   onTap: () {
@@ -295,7 +266,6 @@ class _LoginScreenState extends State<LoginScreen> {
                       ),
                     );
                   },
-
                   child: const Text.rich(
                     TextSpan(
                       children: [
@@ -303,8 +273,7 @@ class _LoginScreenState extends State<LoginScreen> {
                           text: "نسيت كلمة السر؟ ",
                           style: TextStyle(
                             color: Color(0xff0E4595),
-                            fontWeight:
-                                FontWeight.bold,
+                            fontWeight: FontWeight.bold,
                             fontSize: 16,
                           ),
                         ),
@@ -320,7 +289,7 @@ class _LoginScreenState extends State<LoginScreen> {
                   ),
                 ),
 
-                const SizedBox(height: 20),
+                const SizedBox(height: 25),
               ],
             ),
           ),

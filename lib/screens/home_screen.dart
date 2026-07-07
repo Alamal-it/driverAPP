@@ -9,62 +9,66 @@ class HomeScreen extends StatelessWidget {
     return Scaffold(
       backgroundColor: const Color(0xffF5F7FB),
 
-      appBar: AppBar(
-        backgroundColor: const Color(0xff0E4595),
-        elevation: 0,
-        automaticallyImplyLeading: false,
+    appBar: AppBar(
+  backgroundColor: const Color(0xff0E4595),
+  elevation: 0,
+  automaticallyImplyLeading: false,
 
-        actions: [
-          IconButton(
-            onPressed: () {},
-            icon: const Icon(Icons.notifications_none),
-          ),
-        ],
-
-        title: const Row(
-          mainAxisAlignment: MainAxisAlignment.end,
-          children: [
-            CircleAvatar(
-              radius: 18,
-              backgroundColor: Colors.white,
-              child: Icon(
-                Icons.person,
-                color: Color(0xff0E4595),
-              ),
-            ),
-
-            SizedBox(width: 10),
-
-            Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  "مرحباً بك",
-                  style: TextStyle(
-                    fontSize: 12,
-                    color: Colors.white70,
-                  ),
-                ),
-
-                Text(
-                  "أحمد خالد",
-                  style: TextStyle(
-                    fontSize: 16,
-                    color: Colors.white,
-                    fontWeight: FontWeight.bold,
-                  ),
-                ),
-              ],
-            ),
-          ],
+  title: Row(
+    children: [
+      // الإشعارات (أقصى اليسار)
+      IconButton(
+        onPressed: () {},
+        icon: const Icon(
+          Icons.notifications_none,
+          color: Colors.white,
         ),
       ),
+
+      const Spacer(),
+
+      // الاسم
+      const Column(
+        mainAxisSize: MainAxisSize.min,
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+          Text(
+            "مرحباً بك",
+            style: TextStyle(
+              fontSize: 12,
+              color: Colors.white70,
+            ),
+          ),
+          Text(
+            "أحمد خالد",
+            style: TextStyle(
+              fontSize: 16,
+              fontWeight: FontWeight.bold,
+              color: Colors.white,
+            ),
+          ),
+        ],
+      ),
+
+      const SizedBox(width: 10),
+
+      // صورة الملف الشخصي (أقصى اليمين)
+      const CircleAvatar(
+        radius: 18,
+        backgroundColor: Colors.white,
+        child: Icon(
+          Icons.person,
+          color: Color(0xff0E4595),
+        ),
+      ),
+    ],
+  ),
+),
 
       bottomNavigationBar: BottomNavigationBar(
         currentIndex: 0,
         selectedItemColor: const Color(0xff0E4595),
         unselectedItemColor: Colors.grey,
-
         onTap: (index) {
           if (index == 1) {
             Navigator.push(
@@ -75,7 +79,6 @@ class HomeScreen extends StatelessWidget {
             );
           }
         },
-
         items: const [
           BottomNavigationBarItem(
             icon: Icon(Icons.home_outlined),
@@ -99,30 +102,23 @@ class HomeScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(15),
-
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
               Container(
                 padding: const EdgeInsets.all(18),
-
                 decoration: BoxDecoration(
                   color: Colors.white,
                   borderRadius: BorderRadius.circular(18),
                 ),
-
                 child: Column(
                   crossAxisAlignment: CrossAxisAlignment.end,
                   children: [
                     const Text(
                       "حالة التوفر",
-                      style: TextStyle(
-                        color: Colors.grey,
-                      ),
+                      style: TextStyle(color: Colors.grey),
                     ),
-
                     const SizedBox(height: 12),
-
                     Row(
                       mainAxisAlignment:
                           MainAxisAlignment.spaceBetween,
@@ -141,7 +137,6 @@ class HomeScreen extends StatelessWidget {
                             size: 18,
                           ),
                         ),
-
                         const Text(
                           "متاح للتوصيل",
                           style: TextStyle(
@@ -171,21 +166,12 @@ class HomeScreen extends StatelessWidget {
 
               Row(
                 children: [
-                  statCard("12", "مكتملة",
-                      const Color(0xffDFF5DD)),
-
+                  statCard("12", "مكتملة", const Color(0xffDFF5DD)),
                   const SizedBox(width: 10),
-
-                  statCard("3", "جارية",
-                      const Color(0xffDDE8FF)),
-
+                  statCard("3", "جارية", const Color(0xffDDE8FF)),
                   const SizedBox(width: 10),
-
-                  statCard("1", "ملغية",
-                      const Color(0xffFFE0E0)),
-
+                  statCard("1", "ملغية", const Color(0xffFFE0E0)),
                   const SizedBox(width: 10),
-
                   statCard("50", "إجمالي الطلبات",
                       const Color(0xffEAF4DD)),
                 ],
@@ -203,7 +189,6 @@ class HomeScreen extends StatelessWidget {
                       color: Color(0xff0E4595),
                     ),
                   ),
-
                   Text(
                     "آخر الطلبات",
                     style: TextStyle(
@@ -216,21 +201,19 @@ class HomeScreen extends StatelessWidget {
 
               const SizedBox(height: 15),
 
-              orderCard(
-                context,
-                "#ORD-0015",
-                "جازان - مخطط 6",
-                "30 دقيقة",
-              ),
-
+              orderCard(context, "#ORD-0015", "جازان - مخطط 6", "30 دقيقة"),
               const SizedBox(height: 10),
 
-              orderCard(
-                context,
-                "#ORD-0316",
-                "جازان - السويس",
-                "45 دقيقة",
-              ),
+              orderCard(context, "#ORD-0316", "جازان - السويس", "45 دقيقة"),
+              const SizedBox(height: 10),
+
+
+              orderCard(context, "#ORD-0634", "جازان - المطار", "40 دقيقة"),
+              const SizedBox(height: 10),
+
+              orderCard(context, "#ORD-0741", "جازان - النسيم", "25 دقيقة"),
+              const SizedBox(height: 10),
+
             ],
           ),
         ),
@@ -246,12 +229,10 @@ class HomeScreen extends StatelessWidget {
     return Expanded(
       child: Container(
         height: 90,
-
         decoration: BoxDecoration(
           color: color,
           borderRadius: BorderRadius.circular(12),
         ),
-
         child: Column(
           mainAxisAlignment: MainAxisAlignment.center,
           children: [
@@ -263,23 +244,18 @@ class HomeScreen extends StatelessWidget {
                 fontWeight: FontWeight.bold,
               ),
             ),
-
             const SizedBox(height: 5),
-
             Text(
               title,
               textAlign: TextAlign.center,
-              style: const TextStyle(
-                fontSize: 12,
-              ),
+              style: const TextStyle(fontSize: 12),
             ),
           ],
         ),
       ),
     );
   }
-
-  Widget orderCard(
+    Widget orderCard(
     BuildContext context,
     String id,
     String location,
@@ -294,15 +270,19 @@ class HomeScreen extends StatelessWidget {
           ),
         );
       },
-
       child: Container(
         padding: const EdgeInsets.all(15),
-
         decoration: BoxDecoration(
           color: Colors.white,
           borderRadius: BorderRadius.circular(12),
+          boxShadow: [
+            BoxShadow(
+              color: Colors.black.withOpacity(0.05),
+              blurRadius: 8,
+              offset: const Offset(0, 3),
+            ),
+          ],
         ),
-
         child: Row(
           children: [
             const Icon(
@@ -314,8 +294,7 @@ class HomeScreen extends StatelessWidget {
             const Spacer(),
 
             Column(
-              crossAxisAlignment:
-                  CrossAxisAlignment.end,
+              crossAxisAlignment: CrossAxisAlignment.end,
               children: [
                 Text(
                   id,
@@ -332,25 +311,45 @@ class HomeScreen extends StatelessWidget {
                   style: const TextStyle(
                     color: Color(0xff0E4595),
                     fontWeight: FontWeight.bold,
+                    fontSize: 15,
                   ),
                 ),
 
                 const SizedBox(height: 4),
 
-                Text(
-                  time,
-                  style: const TextStyle(
-                    color: Colors.grey,
-                  ),
+                Row(
+                  mainAxisSize: MainAxisSize.min,
+                  children: [
+                    Text(
+                      time,
+                      style: const TextStyle(
+                        color: Colors.grey,
+                      ),
+                    ),
+                    const SizedBox(width: 4),
+                    const Icon(
+                      Icons.access_time,
+                      size: 16,
+                      color: Colors.grey,
+                    ),
+                  ],
                 ),
               ],
             ),
 
             const SizedBox(width: 12),
 
-            const Icon(
-              Icons.location_on_outlined,
-              color: Color(0xff0E4595),
+            Container(
+              width: 45,
+              height: 45,
+              decoration: BoxDecoration(
+                color: const Color(0xffEAF1FF),
+                borderRadius: BorderRadius.circular(12),
+              ),
+              child: const Icon(
+                Icons.location_on,
+                color: Color(0xff0E4595),
+              ),
             ),
           ],
         ),
