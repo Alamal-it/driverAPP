@@ -1,8 +1,17 @@
 import 'package:flutter/material.dart';
 import 'orders_screen.dart';
-
-class HomeScreen extends StatelessWidget {
+import 'wallet_screen.dart';
+import 'map_screen.dart';
+class HomeScreen extends StatefulWidget {
   const HomeScreen({super.key});
+
+  @override
+  State<HomeScreen> createState() => _HomeScreenState();
+}
+
+class _HomeScreenState extends State<HomeScreen> {
+
+  bool isAvailable = true;
 
   @override
   Widget build(BuildContext context) {
@@ -65,39 +74,6 @@ class HomeScreen extends StatelessWidget {
   ),
 ),
 
-      bottomNavigationBar: BottomNavigationBar(
-        currentIndex: 0,
-        selectedItemColor: const Color(0xff0E4595),
-        unselectedItemColor: Colors.grey,
-        onTap: (index) {
-          if (index == 1) {
-            Navigator.push(
-              context,
-              MaterialPageRoute(
-                builder: (_) => const OrdersScreen(),
-              ),
-            );
-          }
-        },
-        items: const [
-          BottomNavigationBarItem(
-            icon: Icon(Icons.home_outlined),
-            label: "الرئيسية",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.assignment_outlined),
-            label: "الطلبات",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.work_outline),
-            label: "المحفظة",
-          ),
-          BottomNavigationBarItem(
-            icon: Icon(Icons.person_outline),
-            label: "حسابي",
-          ),
-        ],
-      ),
 
       body: SingleChildScrollView(
         child: Padding(
@@ -105,52 +81,84 @@ class HomeScreen extends StatelessWidget {
           child: Column(
             crossAxisAlignment: CrossAxisAlignment.end,
             children: [
-              Container(
-                padding: const EdgeInsets.all(18),
-                decoration: BoxDecoration(
-                  color: Colors.white,
-                  borderRadius: BorderRadius.circular(18),
-                ),
-                child: Column(
-                  crossAxisAlignment: CrossAxisAlignment.end,
-                  children: [
-                    const Text(
-                      "حالة التوفر",
-                      style: TextStyle(color: Colors.grey),
-                    ),
-                    const SizedBox(height: 12),
-                    Row(
-                      mainAxisAlignment:
-                          MainAxisAlignment.spaceBetween,
-                      children: [
-                        Container(
-                          width: 26,
-                          height: 26,
-                          decoration: BoxDecoration(
-                            color: Colors.green.shade100,
-                            borderRadius:
-                                BorderRadius.circular(20),
-                          ),
-                          child: const Icon(
-                            Icons.power_settings_new,
-                            color: Colors.green,
-                            size: 18,
-                          ),
-                        ),
-                        const Text(
-                          "متاح للتوصيل",
-                          style: TextStyle(
-                            color: Colors.green,
-                            fontWeight: FontWeight.bold,
-                            fontSize: 18,
-                          ),
-                        ),
-                      ],
-                    ),
-                  ],
-                ),
-              ),
+            Container(
+  padding: const EdgeInsets.symmetric(
+    horizontal: 18,
+    vertical: 18,
+  ),
+  decoration: BoxDecoration(
+    color: Colors.white,
+    borderRadius: BorderRadius.circular(18),
+    boxShadow: [
+      BoxShadow(
+        color: Colors.black.withOpacity(.05),
+        blurRadius: 10,
+        offset: const Offset(0, 4),
+      ),
+    ],
+  ),
+  child: Row(
+    children: [
 
+      Switch(
+        value: isAvailable,
+        activeColor: Colors.white,
+        activeTrackColor: Colors.green,
+        inactiveTrackColor: Colors.red.shade300,
+        onChanged: (value) {
+          setState(() {
+            isAvailable = value;
+          });
+        },
+      ),
+
+      const Spacer(),
+
+      Column(
+        crossAxisAlignment: CrossAxisAlignment.end,
+        children: [
+
+          const Text(
+            "حالة التوفر",
+            style: TextStyle(
+              color: Colors.grey,
+            ),
+          ),
+
+          const SizedBox(height: 6),
+
+          Text(
+            isAvailable
+                ? "متاح للتوصيل"
+                : "غير متاح للتوصيل",
+            style: TextStyle(
+              color: isAvailable
+                  ? Colors.green
+                  : Colors.red,
+              fontWeight: FontWeight.bold,
+              fontSize: 18,
+            ),
+          ),
+        ],
+      ),
+
+      const SizedBox(width: 12),
+
+      CircleAvatar(
+        radius: 18,
+        backgroundColor: isAvailable
+            ? Colors.green.shade100
+            : Colors.red.shade100,
+        child: Icon(
+          Icons.power_settings_new,
+          color: isAvailable
+              ? Colors.green
+              : Colors.red,
+        ),
+      ),
+    ],
+  ),
+),
               const SizedBox(height: 25),
 
               const Text(

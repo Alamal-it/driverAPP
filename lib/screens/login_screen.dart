@@ -1,6 +1,6 @@
 import 'package:flutter/material.dart';
 import 'forgot_password_screen.dart';
-import 'home_screen.dart';
+import 'main_navigation_screen.dart';
 
 class LoginScreen extends StatefulWidget {
   const LoginScreen({super.key});
@@ -18,34 +18,33 @@ class _LoginScreenState extends State<LoginScreen> {
 
   bool rememberMe = false;
 
-  void login() {
-    if (usernameController.text.trim().isEmpty ||
-        passwordController.text.trim().isEmpty) {
-      ScaffoldMessenger.of(context).showSnackBar(
-        const SnackBar(
-          behavior: SnackBarBehavior.floating,
-          margin: EdgeInsets.only(
-            left: 20,
-            right: 20,
-            bottom: 120,
-          ),
-          content: Text(
-            "الرجاء إدخال اسم المستخدم وكلمة السر",
-            textAlign: TextAlign.center,
-          ),
+void login() {
+  if (usernameController.text.trim().isEmpty ||
+      passwordController.text.trim().isEmpty) {
+    ScaffoldMessenger.of(context).showSnackBar(
+      const SnackBar(
+        behavior: SnackBarBehavior.floating,
+        margin: EdgeInsets.only(
+          left: 20,
+          right: 20,
+          bottom: 120,
         ),
-      );
-      return;
-    }
-
-    Navigator.pushReplacement(
-      context,
-      MaterialPageRoute(
-        builder: (_) => const HomeScreen(),
+        content: Text(
+          "الرجاء إدخال اسم المستخدم وكلمة السر",
+          textAlign: TextAlign.center,
+        ),
       ),
     );
+    return;
   }
 
+  Navigator.pushReplacement(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const MainNavigationScreen(),
+    ),
+  );
+}
   @override
   Widget build(BuildContext context) {
     return Scaffold(

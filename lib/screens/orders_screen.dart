@@ -1,5 +1,6 @@
 import 'package:flutter/material.dart';
 import 'order_details_screen.dart';
+import 'returns_screen.dart';
 
 class OrdersScreen extends StatefulWidget {
   const OrdersScreen({super.key});
@@ -12,12 +13,13 @@ class _OrdersScreenState extends State<OrdersScreen> {
   int selectedTab = 0;
   String searchText = '';
 
-  final List<String> tabs = [
-    "الكل",
-    "جديدة",
-    "في الطريق",
-    "تم التوصيل",
-  ];
+final List<String> tabs = [
+  "الكل",
+  "جديدة",
+  "في الطريق",
+  "تم التوصيل",
+  "المرتجعات",
+];
 
   final List<Map<String, dynamic>> orders = [
     {
@@ -122,10 +124,19 @@ class _OrdersScreenState extends State<OrdersScreen> {
 
                 return GestureDetector(
                   onTap: () {
-                    setState(() {
-                      selectedTab = index;
-                    });
-                  },
+  if (tabs[index] == "المرتجعات") {
+    Navigator.push(
+      context,
+      MaterialPageRoute(
+        builder: (_) => const ReturnsScreen(),
+      ),
+    );
+  } else {
+    setState(() {
+      selectedTab = index;
+    });
+  }
+},
                   child: AnimatedContainer(
                     duration: const Duration(milliseconds: 250),
                     margin: const EdgeInsets.symmetric(horizontal: 6),
