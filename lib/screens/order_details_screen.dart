@@ -1,4 +1,5 @@
 import 'package:flutter/material.dart';
+import 'navigation_screen.dart';
 
 class OrderDetailsScreen extends StatelessWidget {
   final String orderId;
@@ -25,17 +26,27 @@ class OrderDetailsScreen extends StatelessWidget {
         backgroundColor: const Color(0xff0E4595),
         elevation: 0,
         automaticallyImplyLeading: false,
+
         leading: IconButton(
           onPressed: () => Navigator.pop(context),
-          icon: const Icon(Icons.arrow_back_ios, color: Colors.white),
+          icon: const Icon(
+            Icons.arrow_back_ios,
+            color: Colors.white,
+          ),
         ),
+
         actions: [
           IconButton(
             onPressed: () {},
-            icon: const Icon(Icons.menu, color: Colors.white),
+            icon: const Icon(
+              Icons.menu,
+              color: Colors.white,
+            ),
           ),
         ],
+
         centerTitle: true,
+
         title: const Text(
           "تفاصيل الطلب",
           style: TextStyle(
@@ -48,23 +59,31 @@ class OrderDetailsScreen extends StatelessWidget {
       body: SingleChildScrollView(
         child: Padding(
           padding: const EdgeInsets.all(18),
+
           child: Column(
             children: [
 
               Row(
-                mainAxisAlignment: MainAxisAlignment.spaceBetween,
+                mainAxisAlignment:
+                    MainAxisAlignment.spaceBetween,
+
                 children: [
 
                   Container(
                     padding: const EdgeInsets.symmetric(
-                        horizontal: 25, vertical: 8),
+                      horizontal: 25,
+                      vertical: 8,
+                    ),
+
                     decoration: BoxDecoration(
                       color: const Color(0xffAFC8F5),
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius:
+                          BorderRadius.circular(12),
                     ),
-                    child: const Text(
-                      "جديدة",
-                      style: TextStyle(
+
+                    child: Text(
+                      status,
+                      style: const TextStyle(
                         color: Color(0xff0E4595),
                         fontWeight: FontWeight.bold,
                       ),
@@ -72,18 +91,23 @@ class OrderDetailsScreen extends StatelessWidget {
                   ),
 
                   Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: const [
+                    crossAxisAlignment:
+                        CrossAxisAlignment.end,
+
+                    children: [
+
                       Text(
-                        "#ORD-0015",
-                        style: TextStyle(
+                        orderId,
+                        style: const TextStyle(
                           fontSize: 28,
                           color: Color(0xff0E4595),
                           fontWeight: FontWeight.bold,
                         ),
                       ),
-                      SizedBox(height: 5),
-                      Text(
+
+                      const SizedBox(height: 5),
+
+                      const Text(
                         "29 مايو 2025",
                         style: TextStyle(
                           color: Color(0xff0E4595),
@@ -108,18 +132,19 @@ class OrderDetailsScreen extends StatelessWidget {
               infoCard(
                 title: "عنوان التوصيل",
                 icon: Icons.location_on_outlined,
-                right1: "جازان - السويس",
+                right1: address,
                 right2: "شارع الخالدية",
               ),
 
               const SizedBox(height: 18),
-                            infoCard(
+
+              infoCard(
                 title: "معلومات الطلب",
                 icon: Icons.receipt_long_outlined,
                 right1: "نوع الدفع",
                 right2: "كاش عند الاستلام",
                 left1: "المبلغ المطلوب",
-                left2: "120 ر.س",
+                left2: price,
               ),
 
               const SizedBox(height: 35),
@@ -127,22 +152,35 @@ class OrderDetailsScreen extends StatelessWidget {
               SizedBox(
                 width: double.infinity,
                 height: 55,
+
                 child: ElevatedButton(
                   onPressed: () {
-                    // الانتقال لصفحة الملاحة
+                    Navigator.push(
+                      context,
+                      MaterialPageRoute(
+                        builder: (_) =>
+                            const NavigationScreen(),
+                      ),
+                    );
                   },
+
                   style: ElevatedButton.styleFrom(
-                    backgroundColor: const Color(0xff0E4595),
+                    backgroundColor:
+                        const Color(0xff0E4595),
+                    foregroundColor: Colors.white,
+                    elevation: 0,
+
                     shape: RoundedRectangleBorder(
-                      borderRadius: BorderRadius.circular(12),
+                      borderRadius:
+                          BorderRadius.circular(12),
                     ),
                   ),
+
                   child: const Text(
                     "بدء التوصيل",
                     style: TextStyle(
                       fontSize: 24,
                       fontWeight: FontWeight.bold,
-                      color: Colors.white,
                     ),
                   ),
                 ),
@@ -153,123 +191,130 @@ class OrderDetailsScreen extends StatelessWidget {
       ),
     );
   }
-
   Widget infoCard({
-    required String title,
-    required IconData icon,
-    required String right1,
-    required String right2,
-    String? left1,
-    String? left2,
-  }) {
-    return Container(
-      width: double.infinity,
-      padding: const EdgeInsets.all(18),
-      decoration: BoxDecoration(
-        color: Colors.white,
-        border: Border.all(
-          color: const Color(0xffD9E3F3),
+  required String title,
+  required IconData icon,
+  required String right1,
+  required String right2,
+  String? left1,
+  String? left2,
+}) {
+  return Container(
+    width: double.infinity,
+    padding: const EdgeInsets.all(18),
+    decoration: BoxDecoration(
+      color: Colors.white,
+      border: Border.all(
+        color: const Color(0xffD9E3F3),
+      ),
+      borderRadius: BorderRadius.circular(12),
+    ),
+    child: Row(
+      children: [
+        Icon(
+          icon,
+          color: const Color(0xff0E4595),
+          size: 38,
         ),
-        borderRadius: BorderRadius.circular(12),
-      ),
-      child: Row(
-        children: [
-          Icon(
-            icon,
-            color: const Color(0xff0E4595),
-            size: 38,
-          ),
 
-          const SizedBox(width: 15),
+        const SizedBox(width: 15),
 
-          Expanded(
-            child: Column(
-              crossAxisAlignment: CrossAxisAlignment.end,
-              children: [
-                Text(
-                  title,
-                  style: const TextStyle(
-                    fontSize: 17,
-                    color: Color(0xff0E4595),
-                    fontWeight: FontWeight.bold,
-                  ),
+        Expanded(
+          child: Column(
+            crossAxisAlignment: CrossAxisAlignment.end,
+            children: [
+              Text(
+                title,
+                style: const TextStyle(
+                  fontSize: 17,
+                  color: Color(0xff0E4595),
+                  fontWeight: FontWeight.bold,
                 ),
+              ),
 
-                const SizedBox(height: 12),
+              const SizedBox(height: 12),
 
-                if (left1 == null)
-                  Column(
-                    crossAxisAlignment: CrossAxisAlignment.end,
-                    children: [
-                      Text(
-                        right1,
-                        style: const TextStyle(
-                          fontSize: 18,
-                          color: Color(0xff0E4595),
+              if (left1 == null)
+                Column(
+                  crossAxisAlignment: CrossAxisAlignment.end,
+                  children: [
+                    Text(
+                      right1,
+                      style: const TextStyle(
+                        fontSize: 18,
+                        color: Color(0xff0E4595),
+                      ),
+                    ),
+
+                    const SizedBox(height: 5),
+
+                    Text(
+                      right2,
+                      style: const TextStyle(
+                        fontSize: 16,
+                        color: Color(0xff0E4595),
+                      ),
+                    ),
+                  ],
+                )
+              else
+                Row(
+                  mainAxisAlignment:
+                      MainAxisAlignment.spaceBetween,
+                  children: [
+                    Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.start,
+                      children: [
+                        Text(
+                          left1,
+                          style: const TextStyle(
+                            color: Color(0xff0E4595),
+                          ),
                         ),
-                      ),
-                      const SizedBox(height: 5),
-                      Text(
-                        right2,
-                        style: const TextStyle(
-                          fontSize: 16,
-                          color: Color(0xff0E4595),
+
+                        const SizedBox(height: 5),
+
+                        Text(
+                          left2!,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Color(0xff0E4595),
+                          ),
                         ),
-                      ),
-                    ],
-                  )
-                else
-                  Row(
-                    mainAxisAlignment:
-                        MainAxisAlignment.spaceBetween,
-                    children: [
-                      Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.start,
-                        children: [
-                          Text(
-                            left1,
-                            style: const TextStyle(
-                              color: Color(0xff0E4595),
-                            ),
+                      ],
+                    ),
+
+                    Column(
+                      crossAxisAlignment:
+                          CrossAxisAlignment.end,
+                      children: [
+                        Text(
+                          right1,
+                          style: const TextStyle(
+                            color: Color(0xff0E4595),
                           ),
-                          const SizedBox(height: 5),
-                          Text(
-                            left2!,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Color(0xff0E4595),
-                            ),
+                        ),
+
+                        const SizedBox(height: 5),
+
+                        Text(
+                          right2,
+                          style: const TextStyle(
+                            fontSize: 18,
+                            color: Color(0xff0E4595),
                           ),
-                        ],
-                      ),
-                      Column(
-                        crossAxisAlignment:
-                            CrossAxisAlignment.end,
-                        children: [
-                          Text(
-                            right1,
-                            style: const TextStyle(
-                              color: Color(0xff0E4595),
-                            ),
-                          ),
-                          const SizedBox(height: 5),
-                          Text(
-                            right2,
-                            style: const TextStyle(
-                              fontSize: 18,
-                              color: Color(0xff0E4595),
-                            ),
-                          ),
-                        ],
-                      ),
-                    ],
-                  ),
-              ],
-            ),
+                        ),
+                      ],
+                    ),
+                  ],
+                ),
+            ],
           ),
-        ],
-      ),
-    );
-  }
+        ),
+      ],
+    ),
+  );
+}
+
 }
