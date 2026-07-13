@@ -8,6 +8,9 @@ import 'package:geolocator/geolocator.dart';
 import 'package:flutter_polyline_points/flutter_polyline_points.dart';
 import 'package:http/http.dart' as http;
 
+import 'verify_screen.dart';
+import 'delivery_failed_screen.dart';
+
 class MapScreen extends StatefulWidget {
   const MapScreen({super.key});
 
@@ -22,7 +25,8 @@ class _MapScreenState extends State<MapScreen> {
 
   StreamSubscription<Position>? positionStream;
 
-  final String apiKey = "AIzaSyB-w-tax79hp6AJ7OvWw2bSFmldyboIXoM";
+  final String apiKey =
+      "AIzaSyB-w-tax79hp6AJ7OvWw2bSFmldyboIXoM";
 
   LatLng currentLocation = const LatLng(
     24.7136,
@@ -37,25 +41,100 @@ class _MapScreenState extends State<MapScreen> {
   Set<Marker> markers = {};
 
   Set<Polyline> polylines = {};
+
   @override
-void initState() {
-  super.initState();
+  void initState() {
+    super.initState();
 
-  loadCarIcon();
+    loadCarIcon();
 
-  getCurrentLocation();
-}
+    getCurrentLocation();
+  }
 
-Future<void> loadCarIcon() async {
-  carIcon = await BitmapDescriptor.fromAssetImage(
-    const ImageConfiguration(
-      size: Size(38, 38),
-    ),
-    "assets/images/car.png",
-  );
-}
+  Future<void> loadCarIcon() async {
+    carIcon = await BitmapDescriptor.fromAssetImage(
+      const ImageConfiguration(
+        size: Size(38, 38),
+      ),
+      "assets/images/car.png",
+    );
+  }
 
-Future<void> getCurrentLocation() async {
+  void showDeliveryDialog() {
+    showDialog(
+      context: context,
+      builder: (_) {
+        return AlertDialog(
+          shape: RoundedRectangleBorder(
+            borderRadius: BorderRadius.circular(18),
+          ),
+          title: const Center(
+            child: Text(
+              "تأكيد حالة الطلب",
+              style: TextStyle(
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+          content: const Text(
+            "هل تم تسليم الطلب؟",
+            textAlign: TextAlign.center,
+          ),
+          actions: [
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.green,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const VerifyScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "تم التسليم",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+
+            const SizedBox(height: 10),
+
+            SizedBox(
+              width: double.infinity,
+              child: ElevatedButton(
+                style: ElevatedButton.styleFrom(
+                  backgroundColor: Colors.red,
+                ),
+                onPressed: () {
+                  Navigator.pop(context);
+
+                  Navigator.push(
+                    context,
+                    MaterialPageRoute(
+                      builder: (_) => const DeliveryFailedScreen(),
+                    ),
+                  );
+                },
+                child: const Text(
+                  "تعذر التسليم",
+                  style: TextStyle(color: Colors.white),
+                ),
+              ),
+            ),
+          ],
+        );
+      },
+    );
+  }
+  Future<void> getCurrentLocation() async {
   bool serviceEnabled =
       await Geolocator.isLocationServiceEnabled();
 
@@ -65,18 +144,15 @@ Future<void> getCurrentLocation() async {
       await Geolocator.checkPermission();
 
   if (permission == LocationPermission.denied) {
-    permission =
-        await Geolocator.requestPermission();
+    permission = await Geolocator.requestPermission();
   }
 
   if (permission == LocationPermission.denied ||
-      permission ==
-          LocationPermission.deniedForever) {
+      permission == LocationPermission.deniedForever) {
     return;
   }
 
-  Position position =
-      await Geolocator.getCurrentPosition(
+  Position position = await Geolocator.getCurrentPosition(
     desiredAccuracy: LocationAccuracy.best,
   );
 
@@ -85,16 +161,12 @@ Future<void> getCurrentLocation() async {
     position.longitude,
   );
 
-  print("وصلت للموقع");
-  print(currentLocation);
-
   await getRoute();
 
   startTracking();
 }
-Future<void> getRoute() async {
-  print("دخلت getRoute");
 
+Future<void> getRoute() async {
   final url =
       "https://maps.googleapis.com/maps/api/directions/json"
       "?origin=${currentLocation.latitude},${currentLocation.longitude}"
@@ -102,19 +174,13 @@ Future<void> getRoute() async {
       "&mode=driving"
       "&key=$apiKey";
 
-  print(url);
-
   final response = await http.get(Uri.parse(url));
-
-  print(response.statusCode);
-  print(response.body);
 
   if (response.statusCode != 200) return;
 
   final data = jsonDecode(response.body);
 
-  if (data["routes"] == null ||
-      data["routes"].isEmpty) {
+  if (data["routes"] == null || data["routes"].isEmpty) {
     return;
   }
 
@@ -141,8 +207,8 @@ Future<void> getRoute() async {
     Polyline(
       polylineId: const PolylineId("route"),
       points: routePoints,
-color: const Color(0xff1565FF),
-width: 10,
+      color: const Color(0xff1565FF),
+      width: 8,
     ),
   );
 
@@ -162,6 +228,7 @@ width: 10,
 
   setState(() {});
 }
+
 void startTracking() {
   positionStream = Geolocator.getPositionStream(
     locationSettings: const LocationSettings(
@@ -169,21 +236,17 @@ void startTracking() {
       distanceFilter: 3,
     ),
   ).listen((Position position) async {
-
     currentLocation = LatLng(
       position.latitude,
       position.longitude,
     );
 
-    // تحديث المسار
     await getRoute();
 
-    // حذف ماركر السيارة القديم
     markers.removeWhere(
       (m) => m.markerId.value == "driver",
     );
 
-    // إضافة السيارة
     markers.add(
       Marker(
         markerId: const MarkerId("driver"),
@@ -195,7 +258,6 @@ void startTracking() {
       ),
     );
 
-    // تحريك الكاميرا مع السيارة
     mapController?.animateCamera(
       CameraUpdate.newCameraPosition(
         CameraPosition(
@@ -210,12 +272,12 @@ void startTracking() {
     setState(() {});
   });
 }
+
 @override
 void dispose() {
   positionStream?.cancel();
   super.dispose();
 }
-
 @override
 Widget build(BuildContext context) {
   return Scaffold(
@@ -237,46 +299,38 @@ Widget build(BuildContext context) {
         zoom: 17,
       ),
 
-     onMapCreated: (GoogleMapController controller) async {
-  mapController = controller;
+      onMapCreated: (controller) async {
+        mapController = controller;
 
-  try {
-    String style =
-        await rootBundle.loadString("assets/images/map_style.json");
+        try {
+          String style = await rootBundle.loadString(
+            "assets/images/map_style.json",
+          );
 
-    print("=================================");
-    print("STYLE LOADED SUCCESSFULLY");
-    print(style);
-    print("=================================");
-
-    await controller.setMapStyle(style);
-  } catch (e) {
-    print("=================================");
-    print("ERROR LOADING STYLE");
-    print(e);
-    print("=================================");
-  }
-},
+          await controller.setMapStyle(style);
+        } catch (_) {}
+      },
 
       markers: markers,
       polylines: polylines,
 
       myLocationEnabled: true,
-      
       myLocationButtonEnabled: false,
 
       zoomControlsEnabled: false,
       compassEnabled: false,
-
       trafficEnabled: true,
       buildingsEnabled: true,
-
       mapToolbarEnabled: false,
       indoorViewEnabled: false,
     ),
 
     floatingActionButton: FloatingActionButton(
       backgroundColor: Colors.white,
+      child: const Icon(
+        Icons.my_location,
+        color: Color(0xff0E4595),
+      ),
       onPressed: () {
         mapController?.animateCamera(
           CameraUpdate.newCameraPosition(
@@ -288,9 +342,32 @@ Widget build(BuildContext context) {
           ),
         );
       },
-      child: const Icon(
-        Icons.my_location,
-        color: Color(0xff0E4595),
+    ),
+
+    bottomNavigationBar: SafeArea(
+      child: Padding(
+        padding: const EdgeInsets.all(15),
+        child: SizedBox(
+          height: 55,
+          width: double.infinity,
+          child: ElevatedButton(
+            style: ElevatedButton.styleFrom(
+              backgroundColor: const Color(0xff0E4595),
+              shape: RoundedRectangleBorder(
+                borderRadius: BorderRadius.circular(15),
+              ),
+            ),
+            onPressed: showDeliveryDialog,
+            child: const Text(
+              "وصلت للعميل",
+              style: TextStyle(
+                color: Colors.white,
+                fontSize: 18,
+                fontWeight: FontWeight.bold,
+              ),
+            ),
+          ),
+        ),
       ),
     ),
   );
