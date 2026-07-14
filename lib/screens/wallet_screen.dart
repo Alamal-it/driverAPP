@@ -1,5 +1,5 @@
 import 'package:flutter/material.dart';
-
+import 'settlement_screen.dart';
 class WalletScreen extends StatelessWidget {
   const WalletScreen({super.key});
 
@@ -202,7 +202,7 @@ class WalletScreen extends StatelessWidget {
                           "قم بتسليم العهدة للمسؤول في نهاية اليوم",
                           textAlign: TextAlign.right,
                           style: TextStyle(
-                            color: Colors.grey,
+                            color: Color.fromARGB(255, 158, 158, 158),
                             fontSize: 14,
                           ),
                         ),
@@ -227,16 +227,14 @@ class WalletScreen extends StatelessWidget {
                   ),
                 ),
 
-                onPressed: () {
-                  ScaffoldMessenger.of(context).showSnackBar(
-                    const SnackBar(
-                      content: Text(
-                        "تم إرسال طلب تسوية العهدة",
-                      ),
-                    ),
-                  );
-                },
-
+               onPressed: () {
+  Navigator.push(
+    context,
+    MaterialPageRoute(
+      builder: (_) => const SettlementScreen(),
+    ),
+  );
+},
                 child: const Text(
                   "تسوية العهدة",
                   style: TextStyle(
